@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -12,6 +13,7 @@ func main() {
 	renameFile()
 	moveFile()
 	copyFile()
+	receiveFile()
 }
 
 // create empty file called empty
@@ -76,4 +78,17 @@ func copyFile() {
 	}
 
 	log.Printf("Copied %d bytes.", bytesCopied)
+}
+
+// receive file metadata
+func receiveFile() {
+	fileStat, err := os.Stat("empty.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("File Name:", fileStat.Name())        // Base name of the file
+	fmt.Println("Size:", fileStat.Size())             // Length in bytes for regular files
+	fmt.Println("Permissions:", fileStat.Mode())      // File mode bits
+	fmt.Println("Last Modified:", fileStat.ModTime()) // Last modification time
+	fmt.Println("Is Directory: ", fileStat.IsDir())   // Abbreviation for Mode().IsDir()
 }
